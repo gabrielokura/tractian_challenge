@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tractian_challenge/ui/home/widgets/home_screen.dart';
+import 'package:get/get.dart';
+import 'package:tractian_challenge/ui/asset/widgets/asset_screen.dart';
+import 'package:tractian_challenge/ui/home/widgets/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,13 +12,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'TRACTIAN Challenge',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const HomeScreen(),
+      initialRoute: '/',
+      getPages: [
+        GetPage(name: '/', page: () => HomePage()),
+        GetPage(name: '/asset', page: () => AssetPage()),
+      ],
     );
   }
 }

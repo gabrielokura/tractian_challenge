@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tractian_challenge/ui/core/colors.dart';
 import 'package:tractian_challenge/ui/home/widgets/company_button.dart';
 
 import '../../../config/assets.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +29,21 @@ class HomeScreen extends StatelessWidget {
             children: [
               CompanyButton(
                 text: 'Jaguar Unit',
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed('/asset');
+                },
               ),
               CompanyButton(
                 text: 'Tobias Unit',
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed('/asset');
+                },
               ),
               CompanyButton(
                 text: 'Apex Unit',
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed('/asset');
+                },
               )
             ],
           ),
