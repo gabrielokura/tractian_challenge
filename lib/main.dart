@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tractian_challenge/ui/asset/widgets/asset_screen.dart';
+import 'package:tractian_challenge/ui/asset/widgets/asset_page.dart';
 import 'package:tractian_challenge/ui/home/widgets/home_page.dart';
 
 void main() {
