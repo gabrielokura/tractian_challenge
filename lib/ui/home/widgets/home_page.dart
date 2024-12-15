@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tractian_challenge/data/services/api/api_client.dart';
-import 'package:tractian_challenge/domain/models/company.dart';
 import 'package:tractian_challenge/ui/core/colors.dart';
 import 'package:tractian_challenge/ui/home/view_models/home_viewmodel.dart';
 import 'package:tractian_challenge/ui/home/widgets/company_button.dart';
@@ -48,7 +46,7 @@ class HomePage extends StatelessWidget {
                         (company) => CompanyButton(
                           text: company.name,
                           onPressed: () async {
-                            Get.toNamed('/asset');
+                            Get.toNamed('/asset', arguments: company);
                           },
                         ),
                       )
