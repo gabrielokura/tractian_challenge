@@ -18,13 +18,8 @@ class ThreeItemsGetUsecase {
       _assetRepository.getLocationsFrom(companyId: company.id),
     ).wait;
 
-    if (locationsResult is! Ok<List<Location>>) {
-      debugPrint('Erro ao buscar locations');
-      return [];
-    }
-
-    if (assetsResult is! Ok<List<CompanyAsset>>) {
-      debugPrint('Erro ao buscar locations');
+    if (locationsResult is! Ok<List<Location>> ||
+        assetsResult is! Ok<List<CompanyAsset>>) {
       return [];
     }
 
