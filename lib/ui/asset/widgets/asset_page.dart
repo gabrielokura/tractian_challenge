@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:tractian_challenge/domain/models/component.dart';
+import 'package:get/get.dart';
+import 'package:tractian_challenge/domain/models/company.dart';
+import 'package:tractian_challenge/domain/models/three_item.dart';
+import 'package:tractian_challenge/ui/asset/view_models/asset_viewmodel.dart';
 import 'package:tractian_challenge/ui/asset/widgets/three_list_item.dart';
 import 'package:tractian_challenge/ui/core/colors.dart';
 
-class AssetPage extends StatelessWidget {
-  const AssetPage({super.key});
+class AssetPage extends StatefulWidget {
+  const AssetPage({super.key, required this.viewModel});
+
+  final AssetViewModel viewModel;
+
+  @override
+  State<AssetPage> createState() => _AssetPageState();
+}
+
+class _AssetPageState extends State<AssetPage> {
+  @override
+  void initState() {
+    widget.viewModel.load(Get.arguments as Company);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,25 +61,26 @@ class AssetPage extends StatelessWidget {
             height: 0,
             thickness: 2,
           ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  dense: true,
-                  minVerticalPadding: 0,
-                  minTileHeight: 0,
-                  horizontalTitleGap: 8,
-                  title: ThreeListItem(
-                      item: Component(
-                          name: 'PRODUCTION AREA - RAW MATERIAL', depth: 0),
-                      isExpandable: false),
-                  onTap: () {},
-                );
-              },
-            ),
-          ),
+          Obx(() {
+            return Expanded(
+              child: ListView.builder(
+                itemCount: widget.viewModel.items.length,
+                itemBuilder: (context, index) {
+                  final item = widget.viewModel.items[index];
+
+                  return ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    dense: true,
+                    minVerticalPadding: 0,
+                    minTileHeight: 0,
+                    horizontalTitleGap: 8,
+                    title: ThreeListItem(item: item, isExpandable: false),
+                    onTap: () {},
+                  );
+                },
+              ),
+            );
+          }),
         ],
       ),
     );

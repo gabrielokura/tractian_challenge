@@ -9,13 +9,16 @@ import 'package:tractian_challenge/utils/result.dart';
 class ApiClient {
   final String _host = 'fake-api.tractian.com';
   final int _port = 8080;
-  final HttpClient _httpClient = HttpClient();
+  final HttpClient Function() _clientFactory;
 
-  ApiClient();
+  ApiClient({HttpClient Function()? clientFactory})
+      : _clientFactory = clientFactory ?? (() => HttpClient());
 
   Future<Result<List<CompanyApiModel>>> getCompanies() async {
+    final httpClient = _clientFactory();
+
     try {
-      final request = await _httpClient.get(_host, _port, '/companies');
+      final request = await httpClient.get(_host, _port, '/companies');
       final response = await request.close();
 
       if (response.statusCode == 200) {
@@ -31,15 +34,17 @@ class ApiClient {
     } on Exception catch (error) {
       return Result.error(error);
     } finally {
-      _httpClient.close();
+      httpClient.close();
     }
   }
 
   Future<Result<List<LocationApiModel>>> getLocationsOf(
       {required String companyId}) async {
+    final httpClient = _clientFactory();
+
     try {
-      final request = await _httpClient.get(
-          _host, _port, '/companies/$companyId/locations');
+      final request =
+          await httpClient.get(_host, _port, '/companies/$companyId/locations');
       final response = await request.close();
 
       if (response.statusCode == 200) {
@@ -55,15 +60,17 @@ class ApiClient {
     } on Exception catch (error) {
       return Result.error(error);
     } finally {
-      _httpClient.close();
+      httpClient.close();
     }
   }
 
   Future<Result<List<AssetApiModel>>> getAssetsOf(
       {required String companyId}) async {
+    final httpClient = _clientFactory();
+
     try {
       final request =
-          await _httpClient.get(_host, _port, '/companies/$companyId/assets');
+          await httpClient.get(_host, _port, '/companies/$companyId/assets');
       final response = await request.close();
 
       if (response.statusCode == 200) {
@@ -79,7 +86,7 @@ class ApiClient {
     } on Exception catch (error) {
       return Result.error(error);
     } finally {
-      _httpClient.close();
+      httpClient.close();
     }
   }
 }
