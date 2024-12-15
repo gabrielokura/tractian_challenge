@@ -5,6 +5,7 @@ import 'package:tractian_challenge/domain/models/three_item.dart';
 import 'package:tractian_challenge/ui/asset/view_models/asset_viewmodel.dart';
 import 'package:tractian_challenge/ui/asset/widgets/three_list_item.dart';
 import 'package:tractian_challenge/ui/core/colors.dart';
+import 'package:tractian_challenge/utils/state.dart';
 
 class AssetPage extends StatefulWidget {
   const AssetPage({super.key, required this.viewModel});
@@ -62,6 +63,11 @@ class _AssetPageState extends State<AssetPage> {
             thickness: 2,
           ),
           Obx(() {
+            final state = widget.viewModel.state.value;
+            if (state == PageState.loading) {
+              return Center(child: CircularProgressIndicator.adaptive());
+            }
+
             return Expanded(
               child: ListView.builder(
                 itemCount: widget.viewModel.items.length,

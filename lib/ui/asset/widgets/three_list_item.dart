@@ -30,7 +30,7 @@ class ThreeListItem extends StatelessWidget {
           )
         else
           const SizedBox(width: 12),
-        ThreeItemIcon(),
+        ThreeItemIcon(type: item.type),
         Flexible(
           child: Tooltip(
             message: item.name,
@@ -39,7 +39,7 @@ class ThreeListItem extends StatelessWidget {
               TextSpan(
                 children: [
                   TextSpan(
-                    text: item.name,
+                    text: item.name.toUpperCase(),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   ),
                 ],
@@ -47,7 +47,12 @@ class ThreeListItem extends StatelessWidget {
             ),
           ),
         ),
-        ThreeItemIndicator(),
+        if (item.hasIndicator)
+          ThreeItemIndicator(
+            type: item.sensorType == 'energy'
+                ? SensorType.energy
+                : SensorType.vibration,
+          ),
       ],
     );
   }
