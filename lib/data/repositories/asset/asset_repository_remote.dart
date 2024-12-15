@@ -1,7 +1,6 @@
 import 'package:tractian_challenge/data/repositories/asset/asset_repository.dart';
 import 'package:tractian_challenge/data/services/api/model/asset_api_model.dart';
 import 'package:tractian_challenge/data/services/api/model/location_api_model.dart';
-import 'package:tractian_challenge/domain/models/company.dart';
 import 'package:tractian_challenge/domain/models/company_asset.dart';
 import 'package:tractian_challenge/domain/models/location.dart';
 import 'package:tractian_challenge/utils/result.dart';
@@ -16,8 +15,8 @@ class AssetRepositoryRemote implements AssetRepository {
 
   @override
   Future<Result<List<CompanyAsset>>> getAssetsFrom(
-      {required Company company}) async {
-    final apiResult = await _apiClient.getAssetsOf(companyId: company.id);
+      {required String companyId}) async {
+    final apiResult = await _apiClient.getAssetsOf(companyId: companyId);
 
     if (apiResult is Ok<List<AssetApiModel>>) {
       final convertedResult = apiResult.value
@@ -45,8 +44,8 @@ class AssetRepositoryRemote implements AssetRepository {
 
   @override
   Future<Result<List<Location>>> getLocationsFrom(
-      {required Company company}) async {
-    final apiResult = await _apiClient.getLocationsOf(companyId: company.id);
+      {required String companyId}) async {
+    final apiResult = await _apiClient.getLocationsOf(companyId: companyId);
 
     if (apiResult is Ok<List<LocationApiModel>>) {
       final convertedResult = apiResult.value

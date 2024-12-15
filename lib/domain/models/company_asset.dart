@@ -1,3 +1,5 @@
+import 'three_item.dart';
+
 class CompanyAsset {
   final String id;
   final String name;
@@ -18,4 +20,10 @@ class CompanyAsset {
     this.gatewayId,
     this.locationId,
   });
+}
+
+extension CompanyAssetToItem on List<CompanyAsset> {
+  List<ThreeItem> toThreeItem() {
+    return map((asset) => ThreeItem.fromAsset(asset)).toList();
+  }
 }
