@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tractian_challenge/domain/models/three_item.dart';
+import 'package:tractian_challenge/domain/models/tree_item.dart';
 
 import '../../core/colors.dart';
 
-class ThreeItemIndicator extends StatelessWidget {
-  const ThreeItemIndicator({super.key, required this.type});
+class TreeItemIndicator extends StatelessWidget {
+  const TreeItemIndicator({super.key, required this.type});
 
   final SensorType type;
 

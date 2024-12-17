@@ -1,4 +1,4 @@
-import 'package:tractian_challenge/domain/models/three_item.dart';
+import 'package:tractian_challenge/domain/models/tree_item.dart';
 
 class Location {
   final String id;
@@ -9,7 +9,7 @@ class Location {
 }
 
 extension LocationToItem on List<Location> {
-  List<ThreeItem> toThreeItem() {
-    return map((location) => ThreeItem.fromLocation(location)).toList();
+  List<TreeItem> toThreeItem() {
+    return map((location) => TreeItem.fromLocation(location)).toList();
   }
 }

@@ -1,19 +1,8 @@
 import 'package:tractian_challenge/domain/models/company_asset.dart';
 import 'package:tractian_challenge/domain/models/location.dart';
 
-class ThreeItem {
-  final ThreeItemType type;
-  final String name;
-  final String id;
-  final String? parentId;
-  final int depth;
-  final String? sensorType;
-
-  bool isExpanded = false;
-
-  bool get hasIndicator => sensorType != null;
-
-  ThreeItem({
+class TreeItem {
+  TreeItem({
     required this.id,
     required this.name,
     this.parentId,
@@ -22,41 +11,72 @@ class ThreeItem {
     this.sensorType,
   });
 
-  factory ThreeItem.fromAsset(CompanyAsset asset) {
+  final TreeItemType type;
+  final String name;
+  final String id;
+  final String? parentId;
+  int depth;
+  final String? sensorType;
+
+  List<TreeItem> children = [];
+
+  bool isExpanded = false;
+
+  bool get hasIndicator => sensorType != null;
+
+  @override
+  int get hashCode => id.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! TreeItem) return false;
+
+    return other.id == id && other.name == name;
+  }
+
+  void changeExpanded() {
+    isExpanded = !isExpanded;
+  }
+
+  void addChild(TreeItem item) {
+    children.add(item);
+  }
+
+  factory TreeItem.fromAsset(CompanyAsset asset) {
     try {
       final component = Component.fromCompanyAsset(asset);
 
-      return ThreeItem(
+      return TreeItem(
         id: component.id,
         parentId: component.parentId ?? component.locationId,
         name: component.name,
         depth: 0,
-        type: ThreeItemType.component,
+        type: TreeItemType.component,
         sensorType: component.sensorType,
       );
     } catch (error) {
-      return ThreeItem(
+      return TreeItem(
         id: asset.id,
         parentId: asset.parentId ?? asset.locationId,
         name: asset.name,
         depth: 0,
-        type: ThreeItemType.asset,
+        type: TreeItemType.asset,
       );
     }
   }
 
-  factory ThreeItem.fromLocation(Location location) {
-    return ThreeItem(
+  factory TreeItem.fromLocation(Location location) {
+    return TreeItem(
       id: location.id,
       name: location.name,
       parentId: location.parentId,
       depth: 0,
-      type: ThreeItemType.location,
+      type: TreeItemType.location,
     );
   }
 }
 
-enum ThreeItemType { component, asset, location }
+enum TreeItemType { component, asset, location }
 
 enum SensorType { energy, vibration }
 

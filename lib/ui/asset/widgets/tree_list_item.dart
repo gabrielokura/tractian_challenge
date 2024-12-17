@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tractian_challenge/ui/asset/widgets/three_item_icon.dart';
-import 'package:tractian_challenge/ui/asset/widgets/three_item_indicator.dart';
+import 'package:tractian_challenge/ui/asset/widgets/tree_item_icon.dart';
+import 'package:tractian_challenge/ui/asset/widgets/tree_item_indicator.dart';
 
-import '../../../domain/models/three_item.dart';
+import '../../../domain/models/tree_item.dart';
 
-class ThreeListItem extends StatelessWidget {
-  const ThreeListItem(
+class TreeListItem extends StatelessWidget {
+  const TreeListItem(
       {super.key, required this.item, required this.isExpandable});
 
-  final ThreeItem item;
+  final TreeItem item;
   final bool isExpandable;
 
   @override
@@ -30,7 +30,7 @@ class ThreeListItem extends StatelessWidget {
           )
         else
           const SizedBox(width: 12),
-        ThreeItemIcon(type: item.type),
+        TreeItemIcon(type: item.type),
         Flexible(
           child: Tooltip(
             message: item.name,
@@ -48,7 +48,7 @@ class ThreeListItem extends StatelessWidget {
           ),
         ),
         if (item.hasIndicator)
-          ThreeItemIndicator(
+          TreeItemIndicator(
             type: item.sensorType == 'energy'
                 ? SensorType.energy
                 : SensorType.vibration,

@@ -1,4 +1,4 @@
-import 'three_item.dart';
+import 'tree_item.dart';
 
 class CompanyAsset {
   final String id;
@@ -23,7 +23,7 @@ class CompanyAsset {
 }
 
 extension CompanyAssetToItem on List<CompanyAsset> {
-  List<ThreeItem> toThreeItem() {
-    return map((asset) => ThreeItem.fromAsset(asset)).toList();
+  List<TreeItem> toThreeItem() {
+    return map((asset) => TreeItem.fromAsset(asset)).toList();
   }
 }

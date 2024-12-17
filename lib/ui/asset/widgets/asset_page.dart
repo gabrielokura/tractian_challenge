@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tractian_challenge/domain/models/company.dart';
-import 'package:tractian_challenge/domain/models/three_item.dart';
 import 'package:tractian_challenge/ui/asset/view_models/asset_viewmodel.dart';
-import 'package:tractian_challenge/ui/asset/widgets/three_list_item.dart';
+import 'package:tractian_challenge/ui/asset/widgets/tree_list_item.dart';
 import 'package:tractian_challenge/ui/core/colors.dart';
 import 'package:tractian_challenge/utils/state.dart';
 
@@ -75,13 +74,17 @@ class _AssetPageState extends State<AssetPage> {
                   final item = widget.viewModel.items[index];
 
                   return ListTile(
+                    key: ValueKey(item.id),
                     contentPadding: EdgeInsets.zero,
                     dense: true,
                     minVerticalPadding: 0,
                     minTileHeight: 0,
                     horizontalTitleGap: 8,
-                    title: ThreeListItem(item: item, isExpandable: false),
-                    onTap: () {},
+                    title: TreeListItem(
+                      item: item,
+                      isExpandable: item.children.isNotEmpty,
+                    ),
+                    onTap: () => widget.viewModel.onTapItem(item),
                   );
                 },
               ),
