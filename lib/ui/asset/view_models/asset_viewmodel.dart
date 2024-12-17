@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'package:get/get.dart';
 import 'package:tractian_challenge/domain/models/tree_item.dart';
 import 'package:tractian_challenge/domain/use_cases/three_item/three_items_get_usecase.dart';
+import 'package:tractian_challenge/ui/asset/models/asset_filter_type.dart';
 
 import '../../../domain/models/company.dart';
 import '../../../utils/state.dart';
@@ -17,6 +18,8 @@ class AssetViewModel {
   var _allItems = <TreeItem>[];
 
   final items = <TreeItem>[].obs;
+
+  var filter = AssetFilterType.none.obs;
 
   void load(Company company) async {
     state.value = PageState.loading;
@@ -34,6 +37,15 @@ class AssetViewModel {
   //   items.value = rootItems;
   // }
 
+  void onTapFilter(AssetFilterType tapped) {
+    if (filter.value == tapped) {
+      filter.value = AssetFilterType.none;
+      return;
+    }
+
+    filter.value = tapped;
+  }
+
   void onTapItem(TreeItem item) async {
     if (item.hasChild == false) return;
 
@@ -49,14 +61,14 @@ class AssetViewModel {
 
   Future<List<TreeItem>> sort(List<TreeItem> items) async {
     final result =
-        await Isolate.run<List<TreeItem>>(() => items.toSortedList());
+        await Isolate.run<List<TreeItem>>(() => items.toTreeHierarchy());
     return result;
   }
 }
 
 // Links: https://stackoverflow.com/questions/41347416/building-tree-view-algorithm
 extension Sorting on List<TreeItem> {
-  List<TreeItem> toSortedList() {
+  List<TreeItem> toTreeHierarchy() {
     Map<String?, List<TreeItem>> parentTree = {};
     List<TreeItem> selectedItems = [];
 

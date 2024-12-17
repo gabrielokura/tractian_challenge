@@ -25,9 +25,9 @@ class FilterButton extends StatelessWidget {
         backgroundColor: isSelected ? AppColors.lightBlue : Colors.transparent,
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         shape: RoundedRectangleBorder(
-          side: isSelected
-              ? BorderSide.none
-              : BorderSide(color: AppColors.grey, width: 1.5),
+          side: BorderSide(
+              color: isSelected ? Colors.transparent : AppColors.grey,
+              width: 1.5),
           borderRadius: BorderRadius.circular(4),
         ),
       ),
