@@ -18,8 +18,7 @@ class TreeItem {
   int depth;
   final String? sensorType;
 
-  List<TreeItem> children = [];
-
+  bool hasChild = false;
   bool isExpanded = false;
 
   bool get hasIndicator => sensorType != null;
@@ -36,10 +35,6 @@ class TreeItem {
 
   void changeExpanded() {
     isExpanded = !isExpanded;
-  }
-
-  void addChild(TreeItem item) {
-    children.add(item);
   }
 
   factory TreeItem.fromAsset(CompanyAsset asset) {

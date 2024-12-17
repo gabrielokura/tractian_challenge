@@ -35,12 +35,14 @@ class AssetViewModel {
   // }
 
   void onTapItem(TreeItem item) async {
-    if (item.children.isEmpty) return;
+    if (item.hasChild == false) return;
 
     item.changeExpanded();
+    final index = _allItems.indexWhere((current) => item.id == current.id);
+    _allItems[index] = item;
 
     List<TreeItem> copy = [];
-    copy.addAll(items);
+    copy.addAll(_allItems);
 
     items.value = await sort(copy);
   }
@@ -52,56 +54,42 @@ class AssetViewModel {
   }
 }
 
+// Links: https://stackoverflow.com/questions/41347416/building-tree-view-algorithm
 extension Sorting on List<TreeItem> {
   List<TreeItem> toSortedList() {
-    var sortedItems = this;
-
-    sortedItems.sort((a, b) {
-      if (a.parentId == null) {
-        return -1;
-      }
-
-      if (b.parentId == null) {
-        return 1;
-      }
-
-      return a.parentId!.compareTo(b.parentId!);
-    });
-
-    Map<String?, TreeItem> itemMap = {};
-
-    for (var item in sortedItems) {
-      itemMap.putIfAbsent(item.id, () => item);
-
-      final parentHasChild =
-          itemMap[item.parentId]?.children.isNotEmpty ?? false;
-
-      if (parentHasChild == false) {
-        itemMap[item.parentId]?.addChild(item);
-      }
-    }
-
-    void addChildren(TreeItem item, List<TreeItem> items, int level) {
-      if (item.isExpanded == false || item.children.isEmpty) return;
-
-      for (var child in item.children) {
-        item.depth = level;
-        items.add(child);
-
-        addChildren(child, items, level + 1);
-      }
-    }
-
+    Map<String?, List<TreeItem>> parentTree = {};
     List<TreeItem> selectedItems = [];
-    for (var entry in itemMap.entries) {
-      if (entry.value.parentId != null) continue;
 
-      entry.value.depth = 0;
-      selectedItems.add(entry.value);
-
-      addChildren(entry.value, selectedItems, 1);
+    for (var item in this) {
+      parentTree.putIfAbsent(item.parentId, () => []).add(item);
     }
+
+    buildHierarchy(map: parentTree, level: 0, selectedItems: selectedItems);
 
     return selectedItems;
+  }
+
+  void buildHierarchy({
+    String? key,
+    required Map<String?, List<TreeItem>> map,
+    required int level,
+    required List<TreeItem> selectedItems,
+  }) {
+    final children = map[key] ?? [];
+    if (children.isEmpty) return;
+
+    for (var child in children) {
+      child.depth = level;
+      child.hasChild = map.containsKey(child.id);
+      selectedItems.add(child);
+
+      if (child.isExpanded == false) continue;
+
+      buildHierarchy(
+          key: child.id,
+          map: map,
+          level: level + 1,
+          selectedItems: selectedItems);
+    }
   }
 }

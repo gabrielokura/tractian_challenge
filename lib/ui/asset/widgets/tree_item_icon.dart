@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tractian_challenge/config/assets.dart';
 import 'package:tractian_challenge/domain/models/tree_item.dart';
 import 'package:tractian_challenge/ui/core/colors.dart';
 
@@ -7,14 +8,14 @@ class TreeItemIcon extends StatelessWidget {
 
   final TreeItemType type;
 
-  IconData get icon {
+  String get icon {
     switch (type) {
       case TreeItemType.asset:
-        return Icons.gif_box;
+        return Assets.assetIcon;
       case TreeItemType.component:
-        return Icons.code;
+        return Assets.componentIcon;
       case TreeItemType.location:
-        return Icons.location_on_outlined;
+        return Assets.locationIcon;
     }
   }
 
@@ -22,9 +23,11 @@ class TreeItemIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 5),
-      child: Icon(
+      child: Image.asset(
         icon,
-        size: 20,
+        width: 26,
+        height: 26,
+        fit: BoxFit.fitHeight,
         color: AppColors.lightBlue,
       ),
     );

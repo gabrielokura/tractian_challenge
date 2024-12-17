@@ -27,6 +27,7 @@ class _AssetPageState extends State<AssetPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        iconTheme: IconThemeData(color: AppColors.white),
         title: Text(
           'Assets',
           style: TextStyle(
@@ -64,13 +65,19 @@ class _AssetPageState extends State<AssetPage> {
           Obx(() {
             final state = widget.viewModel.state.value;
             if (state == PageState.loading) {
-              return Center(child: CircularProgressIndicator.adaptive());
+              return Expanded(
+                  child: Center(child: CircularProgressIndicator.adaptive()));
             }
 
             return Expanded(
               child: ListView.builder(
-                itemCount: widget.viewModel.items.length,
+                padding: EdgeInsets.all(16),
+                itemCount: widget.viewModel.items.length + 1,
                 itemBuilder: (context, index) {
+                  if (index == widget.viewModel.items.length) {
+                    return SizedBox(height: 30);
+                  }
+
                   final item = widget.viewModel.items[index];
 
                   return ListTile(
@@ -79,10 +86,10 @@ class _AssetPageState extends State<AssetPage> {
                     dense: true,
                     minVerticalPadding: 0,
                     minTileHeight: 0,
-                    horizontalTitleGap: 8,
+                    horizontalTitleGap: 16,
                     title: TreeListItem(
                       item: item,
-                      isExpandable: item.children.isNotEmpty,
+                      isExpandable: item.hasChild,
                     ),
                     onTap: () => widget.viewModel.onTapItem(item),
                   );
