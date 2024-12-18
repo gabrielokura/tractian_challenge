@@ -13,14 +13,16 @@ class Filter {
   bool isMatching(TreeItem item) {
     bool isMatching = false;
 
-    if (assetFilter != AssetFilterType.none) {
-      final isSameSensorType = _isTheSame(item.sensorType, assetFilter);
+    if (assetFilter == AssetFilterType.critical) {
+      isMatching = item.sensorStatus == SensorStatus.alert;
 
-      if (isSameSensorType == false) {
-        return false;
-      }
+      if (isMatching == false) return false;
+    }
 
-      isMatching = isSameSensorType;
+    if (assetFilter == AssetFilterType.energy) {
+      isMatching = item.sensorType == SensorType.energy;
+
+      if (isMatching == false) return false;
     }
 
     if (query.isNotEmpty) {
@@ -35,12 +37,5 @@ class Filter {
     }
 
     return isMatching;
-  }
-
-  bool _isTheSame(SensorType? sensorType, AssetFilterType assetFilterType) {
-    return (sensorType == SensorType.energy &&
-            assetFilter == AssetFilterType.energy) ||
-        (sensorType == SensorType.vibration &&
-            assetFilter == AssetFilterType.critical);
   }
 }

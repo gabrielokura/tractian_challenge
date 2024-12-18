@@ -3,7 +3,7 @@ import 'dart:isolate';
 import 'package:get/get.dart';
 import 'package:tractian_challenge/domain/models/tree_item.dart';
 import 'package:tractian_challenge/domain/use_cases/three_item/three_items_get_usecase.dart';
-import 'package:tractian_challenge/ui/asset/models/asset_filter_type.dart';
+import 'package:tractian_challenge/ui/asset/models/filter.dart';
 
 import '../../../domain/models/company.dart';
 import '../../../utils/state.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tractian_challenge/domain/models/company.dart';
-import 'package:tractian_challenge/ui/asset/models/asset_filter_type.dart';
+import 'package:tractian_challenge/ui/asset/models/filter.dart';
 import 'package:tractian_challenge/ui/asset/view_models/asset_viewmodel.dart';
 import 'package:tractian_challenge/ui/asset/widgets/empty_state.dart';
 import 'package:tractian_challenge/ui/asset/widgets/filter_button.dart';
