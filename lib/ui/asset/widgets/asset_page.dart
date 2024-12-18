@@ -20,7 +20,11 @@ class AssetPage extends StatefulWidget {
 class _AssetPageState extends State<AssetPage> {
   @override
   void initState() {
-    widget.viewModel.load(Get.arguments as Company);
+    final arguments = Get.arguments;
+    if (arguments is Company) {
+      widget.viewModel.load(arguments);
+    }
+
     super.initState();
   }
 
