@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tractian_challenge/domain/models/company.dart';
-import 'package:tractian_challenge/domain/models/tree_item.dart';
 import 'package:tractian_challenge/ui/asset/models/asset_filter_type.dart';
 import 'package:tractian_challenge/ui/asset/view_models/asset_viewmodel.dart';
 import 'package:tractian_challenge/ui/asset/widgets/empty_state.dart';
 import 'package:tractian_challenge/ui/asset/widgets/filter_button.dart';
+import 'package:tractian_challenge/ui/asset/widgets/search_query_field.dart';
 import 'package:tractian_challenge/ui/asset/widgets/tree_list_item.dart';
 import 'package:tractian_challenge/ui/core/colors.dart';
 import 'package:tractian_challenge/utils/state.dart';
@@ -58,7 +59,7 @@ class _AssetPageState extends State<AssetPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextField(
+                SearchQueryField(
                   controller: searchQueryController,
                   onSubmitted: (value) => widget.viewModel.onTypeQuery(value),
                 ),
