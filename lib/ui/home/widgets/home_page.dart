@@ -28,38 +28,54 @@ class HomePage extends StatelessWidget {
           final state = viewModel.state.value;
 
           if (state == PageState.error) {
-            return Center(
-              child: Text('Carregamento falhou'),
-            );
+            return _buildErrorState();
           }
 
           if (state == PageState.success) {
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  spacing: 32,
-                  children: viewModel.companies
-                      .map(
-                        (company) => CompanyButton(
-                          text: company.name,
-                          onPressed: () async {
-                            Get.toNamed('/asset', arguments: company);
-                          },
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            );
+            return _buildButtons();
           }
 
-          return Center(
-            child: CircularProgressIndicator.adaptive(),
-          );
+          return _buildLoadingIndicator();
         },
+      ),
+    );
+  }
+
+  Widget _buildErrorState() {
+    return Expanded(
+      child: Center(
+        child: Text('Carregamento falhou'),
+      ),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return Expanded(
+      child: Center(
+        child: CircularProgressIndicator.adaptive(),
+      ),
+    );
+  }
+
+  Widget _buildButtons() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          spacing: 32,
+          children: viewModel.companies
+              .map(
+                (company) => CompanyButton(
+                  text: company.name,
+                  onPressed: () async {
+                    Get.toNamed('/asset', arguments: company);
+                  },
+                ),
+              )
+              .toList(),
+        ),
       ),
     );
   }

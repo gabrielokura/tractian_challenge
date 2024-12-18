@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tractian_challenge/ui/core/colors.dart';
 
 class CompanyButton extends StatelessWidget {
@@ -31,7 +32,7 @@ class CompanyButton extends StatelessWidget {
             SizedBox(width: 20),
             Text(
               text,
-              style: TextStyle(
+              style: GoogleFonts.roboto(
                 color: AppColors.white,
                 fontWeight: FontWeight.w500,
                 fontSize: 18,

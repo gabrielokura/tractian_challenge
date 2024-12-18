@@ -16,12 +16,10 @@ class TreeItem {
   final String id;
   final String? parentId;
   int depth;
-  final String? sensorType;
+  final SensorType? sensorType;
 
   bool hasChild = false;
   bool isExpanded = false;
-
-  bool get hasIndicator => sensorType != null;
 
   @override
   int get hashCode => id.hashCode;
@@ -47,7 +45,9 @@ class TreeItem {
         name: component.name,
         depth: 0,
         type: TreeItemType.component,
-        sensorType: component.sensorType,
+        sensorType: component.sensorType == 'energy'
+            ? SensorType.energy
+            : SensorType.vibration,
       );
     } catch (error) {
       return TreeItem(
@@ -91,6 +91,11 @@ class Component {
 
   factory Component.fromCompanyAsset(CompanyAsset asset) {
     return Component(
-        id: asset.id, name: asset.name, sensorType: asset.sensorType!);
+      id: asset.id,
+      parentId: asset.parentId,
+      locationId: asset.locationId,
+      name: asset.name,
+      sensorType: asset.sensorType!,
+    );
   }
 }
