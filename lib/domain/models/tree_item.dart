@@ -9,6 +9,7 @@ class TreeItem {
     required this.depth,
     required this.type,
     this.sensorType,
+    this.sensorStatus,
   });
 
   final TreeItemType type;
@@ -17,6 +18,7 @@ class TreeItem {
   final String? parentId;
   int depth;
   final SensorType? sensorType;
+  final SensorStatus? sensorStatus;
 
   bool hasChild = false;
   bool isExpanded = false;
@@ -36,6 +38,20 @@ class TreeItem {
   }
 
   factory TreeItem.fromAsset(CompanyAsset asset) {
+    SensorStatus? sensorStatus;
+    SensorType? sensorType;
+
+    if (asset.status != null) {
+      sensorStatus =
+          asset.status == 'alert' ? SensorStatus.alert : SensorStatus.operating;
+    }
+
+    if (asset.sensorType != null) {
+      sensorType = asset.sensorType == 'energy'
+          ? SensorType.energy
+          : SensorType.vibration;
+    }
+
     try {
       final component = Component.fromCompanyAsset(asset);
 
@@ -45,18 +61,18 @@ class TreeItem {
         name: component.name,
         depth: 0,
         type: TreeItemType.component,
-        sensorType: component.sensorType == 'energy'
-            ? SensorType.energy
-            : SensorType.vibration,
+        sensorType: sensorType,
+        sensorStatus: sensorStatus,
       );
     } catch (error) {
       return TreeItem(
-        id: asset.id,
-        parentId: asset.parentId ?? asset.locationId,
-        name: asset.name,
-        depth: 0,
-        type: TreeItemType.asset,
-      );
+          id: asset.id,
+          parentId: asset.parentId ?? asset.locationId,
+          name: asset.name,
+          depth: 0,
+          type: TreeItemType.asset,
+          sensorStatus: sensorStatus,
+          sensorType: sensorType);
     }
   }
 
@@ -72,6 +88,8 @@ class TreeItem {
 }
 
 enum TreeItemType { component, asset, location }
+
+enum SensorStatus { operating, alert }
 
 enum SensorType { energy, vibration }
 

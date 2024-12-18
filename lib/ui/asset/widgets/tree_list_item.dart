@@ -69,9 +69,10 @@ class TreeListItem extends StatelessWidget {
               ),
             ),
           ),
-          if (item.sensorType != null)
+          if (item.sensorType != null || item.sensorStatus != null)
             TreeItemIndicator(
-              type: item.sensorType!,
+              type: item.sensorType,
+              status: item.sensorStatus,
             ),
         ],
       ),

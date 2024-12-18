@@ -4,9 +4,10 @@ import 'package:tractian_challenge/domain/models/tree_item.dart';
 import '../../core/colors.dart';
 
 class TreeItemIndicator extends StatelessWidget {
-  const TreeItemIndicator({super.key, required this.type});
+  const TreeItemIndicator({super.key, this.type, this.status});
 
-  final SensorType type;
+  final SensorType? type;
+  final SensorStatus? status;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class TreeItemIndicator extends StatelessWidget {
                 Icons.bolt,
               ),
             ),
-          if (type == SensorType.vibration)
+          if (status == SensorStatus.alert)
             const Padding(
               padding: EdgeInsets.only(left: 5),
               child: Icon(
