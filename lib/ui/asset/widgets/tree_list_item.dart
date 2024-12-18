@@ -55,11 +55,9 @@ class TreeListItem extends StatelessWidget {
               ),
             ),
           ),
-          if (item.hasIndicator)
+          if (item.sensorType != null)
             TreeItemIndicator(
-              type: item.sensorType == 'energy'
-                  ? SensorType.energy
-                  : SensorType.vibration,
+              type: item.sensorType!,
             ),
         ],
       ),

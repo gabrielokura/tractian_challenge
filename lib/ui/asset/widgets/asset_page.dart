@@ -113,14 +113,15 @@ class _AssetPageState extends State<AssetPage> {
           FilterButton(
             text: 'Sensor de Energia',
             icon: Icons.bolt_outlined,
-            isSelected: widget.viewModel.filter.value == AssetFilterType.energy,
+            isSelected:
+                widget.viewModel.assetFilter.value == AssetFilterType.energy,
             onPress: () => widget.viewModel.onTapFilter(AssetFilterType.energy),
           ),
           FilterButton(
             text: 'Crítico',
             icon: Icons.info_outline,
             isSelected:
-                widget.viewModel.filter.value == AssetFilterType.critical,
+                widget.viewModel.filter.assetFilter == AssetFilterType.critical,
             onPress: () =>
                 widget.viewModel.onTapFilter(AssetFilterType.critical),
           )
