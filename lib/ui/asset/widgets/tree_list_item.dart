@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tractian_challenge/ui/asset/widgets/tree_item_icon.dart';
 import 'package:tractian_challenge/ui/asset/widgets/tree_item_indicator.dart';
+import 'package:tractian_challenge/utils/string_extensions.dart';
 
 import '../../../domain/models/tree_item.dart';
 
 class TreeListItem extends StatelessWidget {
-  const TreeListItem(
-      {super.key, required this.item, required this.isExpandable});
+  const TreeListItem({
+    super.key,
+    required this.item,
+    required this.isExpandable,
+    required this.searchQuery,
+  });
 
   final TreeItem item;
   final bool isExpandable;
+
+  final String searchQuery;
 
   final itemHeight = 40.0;
   final arrowIconWidth = 24.0;
@@ -44,13 +52,19 @@ class TreeListItem extends StatelessWidget {
               child: Text.rich(
                 style: const TextStyle(overflow: TextOverflow.ellipsis),
                 TextSpan(
-                  children: [
-                    TextSpan(
-                      text: item.name.toUpperCase(),
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
-                    ),
-                  ],
+                  children: searchQuery.isNotEmpty
+                      ? item.name.getTextSpansWithHighlightedTexts(
+                          searchQuery,
+                          GoogleFonts.roboto(
+                              fontSize: 16, fontWeight: FontWeight.w400),
+                        )
+                      : [
+                          TextSpan(
+                            text: item.name.toUpperCase(),
+                            style: GoogleFonts.roboto(
+                                fontSize: 16, fontWeight: FontWeight.w400),
+                          ),
+                        ],
                 ),
               ),
             ),

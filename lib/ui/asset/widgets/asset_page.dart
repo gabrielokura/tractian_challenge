@@ -98,6 +98,7 @@ class _AssetPageState extends State<AssetPage> {
                     title: TreeListItem(
                       item: item,
                       isExpandable: item.hasChild,
+                      searchQuery: widget.viewModel.searchQuery.value,
                     ),
                     onTap: () => widget.viewModel.onTapItem(item),
                   );
