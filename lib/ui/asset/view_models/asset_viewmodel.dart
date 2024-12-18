@@ -46,6 +46,12 @@ class AssetViewModel {
     items.value = await sort(_allItems, filter);
   }
 
+  void onTypeQuery(String text) async {
+    searchQuery.value = text;
+
+    items.value = await sort(_allItems, filter);
+  }
+
   void onTapItem(TreeItem item) async {
     if (item.hasChild == false) return;
 

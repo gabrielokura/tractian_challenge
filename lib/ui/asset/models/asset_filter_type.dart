@@ -11,19 +11,36 @@ class Filter {
   bool get isActive => assetFilter != AssetFilterType.none || query.isNotEmpty;
 
   bool isMatching(TreeItem item) {
-    if (assetFilter == AssetFilterType.none && query.isEmpty) return true;
+    bool isMatching = false;
 
-    if ((item.sensorType == SensorType.energy &&
-            assetFilter == AssetFilterType.energy) ||
-        (item.sensorType == SensorType.vibration &&
-            assetFilter == AssetFilterType.critical)) {
-      return true;
+    if (assetFilter != AssetFilterType.none) {
+      final isSameSensorType = _isTheSame(item.sensorType, assetFilter);
+
+      if (isSameSensorType == false) {
+        return false;
+      }
+
+      isMatching = isSameSensorType;
     }
 
-    final nameContainsSearch =
-        item.name.toLowerCase().contains(query.toLowerCase());
-    if (query.isNotEmpty && nameContainsSearch) return true;
+    if (query.isNotEmpty) {
+      final nameContainsSearch =
+          item.name.toLowerCase().contains(query.toLowerCase());
 
-    return false;
+      if (nameContainsSearch == false) {
+        return false;
+      }
+
+      isMatching = nameContainsSearch;
+    }
+
+    return isMatching;
+  }
+
+  bool _isTheSame(SensorType? sensorType, AssetFilterType assetFilterType) {
+    return (sensorType == SensorType.energy &&
+            assetFilter == AssetFilterType.energy) ||
+        (sensorType == SensorType.vibration &&
+            assetFilter == AssetFilterType.critical);
   }
 }

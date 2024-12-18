@@ -28,6 +28,8 @@ class _AssetPageState extends State<AssetPage> {
     super.initState();
   }
 
+  final TextEditingController searchQueryController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,10 +56,10 @@ class _AssetPageState extends State<AssetPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // TextFieldWidget(
-                //   hintText: 'Buscar Ativo ou Local',
-                //   controller: controller.searchTextEditingController,
-                // ),
+                TextField(
+                  controller: searchQueryController,
+                  onSubmitted: (value) => widget.viewModel.onTypeQuery(value),
+                ),
                 const SizedBox(height: 10),
                 _buildFilterButtons(),
               ],
