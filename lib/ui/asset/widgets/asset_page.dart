@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tractian_challenge/domain/models/company.dart';
+import 'package:tractian_challenge/domain/models/tree_item.dart';
 import 'package:tractian_challenge/ui/asset/models/asset_filter_type.dart';
 import 'package:tractian_challenge/ui/asset/view_models/asset_viewmodel.dart';
 import 'package:tractian_challenge/ui/asset/widgets/filter_button.dart';
@@ -72,41 +73,50 @@ class _AssetPageState extends State<AssetPage> {
           ),
           Obx(() {
             final state = widget.viewModel.state.value;
+
             if (state == PageState.loading) {
-              return Expanded(
-                  child: Center(child: CircularProgressIndicator.adaptive()));
+              return _buildLoadingIndicator();
             }
 
-            return Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.all(16),
-                itemCount: widget.viewModel.items.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == widget.viewModel.items.length) {
-                    return SizedBox(height: 30);
-                  }
-
-                  final item = widget.viewModel.items[index];
-
-                  return ListTile(
-                    key: ValueKey(item.id),
-                    contentPadding: EdgeInsets.zero,
-                    dense: true,
-                    minVerticalPadding: 0,
-                    minTileHeight: 0,
-                    horizontalTitleGap: 16,
-                    title: TreeListItem(
-                      item: item,
-                      isExpandable: item.hasChild,
-                      searchQuery: widget.viewModel.searchQuery.value,
-                    ),
-                    onTap: () => widget.viewModel.onTapItem(item),
-                  );
-                },
-              ),
-            );
+            return _buildAssets();
           }),
         ],
+      ),
+    );
+  }
+
+  Widget _buildLoadingIndicator() {
+    return Expanded(child: Center(child: CircularProgressIndicator.adaptive()));
+  }
+
+  Widget _buildAssets() {
+    return Expanded(
+      child: ListView.builder(
+        itemExtent: 40,
+        padding: EdgeInsets.all(16),
+        itemCount: widget.viewModel.items.length + 1,
+        itemBuilder: (context, index) {
+          if (index == widget.viewModel.items.length) {
+            return SizedBox(height: 30);
+          }
+
+          final item = widget.viewModel.items[index];
+
+          return ListTile(
+            key: ValueKey(item.id),
+            contentPadding: EdgeInsets.zero,
+            dense: true,
+            minVerticalPadding: 0,
+            minTileHeight: 0,
+            horizontalTitleGap: 16,
+            title: TreeListItem(
+              item: item,
+              isExpandable: item.hasChild,
+              searchQuery: widget.viewModel.searchQuery.value,
+            ),
+            onTap: () => widget.viewModel.onTapItem(item),
+          );
+        },
       ),
     );
   }
