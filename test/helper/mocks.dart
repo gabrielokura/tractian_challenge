@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:mocktail/mocktail.dart';
+import 'package:tractian_challenge/data/services/api/api_client.dart';
+
+class MockApiClient extends Mock implements ApiClient {}
 
 class MockHttpClient extends Mock implements HttpClient {}
 
