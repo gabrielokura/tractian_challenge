@@ -15,30 +15,33 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: AppColors.darkBlue,
-        title: const Image(
-          image: AssetImage(Assets.logo),
-          width: 130,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: AppColors.darkBlue,
+          title: const Image(
+            image: AssetImage(Assets.logo),
+            width: 130,
+          ),
         ),
-      ),
-      body: Obx(
-        () {
-          final state = viewModel.state.value;
+        body: Column(
+          children: [
+            Obx(
+              () {
+                final state = viewModel.state.value;
 
-          if (state == PageState.error) {
-            return _buildErrorState();
-          }
+                if (state == PageState.error) {
+                  return _buildErrorState();
+                }
 
-          if (state == PageState.success) {
-            return _buildButtons();
-          }
+                if (state == PageState.success) {
+                  return _buildButtons();
+                }
 
-          return _buildLoadingIndicator();
-        },
-      ),
-    );
+                return _buildLoadingIndicator();
+              },
+            ),
+          ],
+        ));
   }
 
   Widget _buildErrorState() {
