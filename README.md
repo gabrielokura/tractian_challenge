@@ -1,6 +1,6 @@
 # Desafio Mobile TRACTIAN
 
-### Melhoras para o futuro
+### Melhorias para o futuro
 
 - Melhorar a busca por texto quando o asset possui outros filhos (em alguns casos específicos os filhos não são mostrados). 
 Isso pode ser resolvido através de um cache da árvore após seu primeiro preenchimento.
@@ -17,7 +17,8 @@ Essa funcionalidade exigiria algum mecanismo de sincronização a ser pensado ta
 
 O repositório contém dois vídeos com a demonstração do aplicativo em funcionamento. Um vídeo rodando em um aparelho Android (Pixel 3a) e outro em um iPhone SE (terceira geração). 
 
-<video width="640" height="360" controls>
-  <source src="./ios_demo.mp4" type="video/mp4">
-  Seu navegador não suporta vídeos HTML5.
-</video>
+[Baixar vídeo iOS](./ios_demo.mp4)
+
+[Baixar vídeo Android](./android_demo.webm)
+
+https://youtube.com/shorts/6WKXLpx6PEo
