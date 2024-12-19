@@ -1,21 +1,21 @@
-# Desafio Mobile TRACTIAN
+# Mobile Challenge - TRACTIAN
 
-### Melhorias para o futuro
+### Improvements
 
-- Melhorar a busca por texto quando o asset possui outros filhos (em alguns casos específicos os filhos não são mostrados). 
-Isso pode ser resolvido através de um cache da árvore após seu primeiro preenchimento.
+- Search: Improve text search when the asset has other children (in some specific cases, the children are not displayed).
+This can be resolved by implementing a cache of the tree after its initial population.
 
-- Localização de todos os textos.
+- Internationalization of all texts.
 
-- Tela de assets: pode ser adicionada uma etapa posterior a seleção da empresa para melhorar a eficiência da visualização de todos os dados. Por exemplo, selecionando a partir de um mapa a região com seus respectivos assets. Mesmo utilizando a árvore de componentes a visualização não é muito intuitiva. Partindo de uma seleção anterior 
-o app pode mostrar ao usuário dados mais relacionados ao propósito da sua busca.
+- Assets screen: a step could be added after the company selection to improve the efficiency of viewing all the data.
+For example, selecting the region with its respective assets from a map. Even using the component tree, the visualization is not very intuitive. Starting from a prior selection, the app could present the user with data more aligned to the purpose of their search.
 
-- Offline: Os dados depois de formatados poderiam ser salvos no dispositivo, permitindo o funcionamento offline e uma velocidade de carregamento ainda maior. 
-Essa funcionalidade exigiria algum mecanismo de sincronização a ser pensado também. 
+- Offline: After being sorted, the data could be saved on the device, allowing offline functionality and even faster loading speeds.
+This feature would also require some synchronization mechanism to be devised.
 
-## Vídeo demonstração
+## Demonstration video
 
-O repositório contém dois vídeos com a demonstração do aplicativo em funcionamento. Um vídeo rodando em um aparelho Android (Pixel 3a) e outro em um iPhone SE (terceira geração). 
+The repository contains two videos demonstrating the application in action. One video shows it running on an Android device (Pixel 3a) and the other on an iPhone SE (third generation).
 
 [![Assista ao vídeo no YouTube](https://img.youtube.com/vi/6WKXLpx6PEo/maxresdefault.jpg)](https://youtube.com/shorts/6WKXLpx6PEo?feature=share)
 
