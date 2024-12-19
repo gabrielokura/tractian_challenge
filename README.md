@@ -18,6 +18,6 @@ Essa funcionalidade exigiria algum mecanismo de sincronização a ser pensado ta
 O repositório contém dois vídeos com a demonstração do aplicativo em funcionamento. Um vídeo rodando em um aparelho Android (Pixel 3a) e outro em um iPhone SE (terceira geração). 
 
 <video width="640" height="360" controls>
-  <source src="ios_demo.mp4" type="video/mp4">
+  <source src="./ios_demo.mp4" type="video/mp4">
   Seu navegador não suporta vídeos HTML5.
 </video>
