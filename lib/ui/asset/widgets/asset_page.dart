@@ -52,7 +52,7 @@ class _AssetPageState extends State<AssetPage> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 24,
+              horizontal: 16,
               vertical: 15,
             ),
             child: Column(
