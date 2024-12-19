@@ -17,8 +17,8 @@ Essa funcionalidade exigiria algum mecanismo de sincronização a ser pensado ta
 
 O repositório contém dois vídeos com a demonstração do aplicativo em funcionamento. Um vídeo rodando em um aparelho Android (Pixel 3a) e outro em um iPhone SE (terceira geração). 
 
+[![Assista ao vídeo no YouTube](https://img.youtube.com/vi/6WKXLpx6PEo/maxresdefault.jpg)](https://youtube.com/shorts/6WKXLpx6PEo?feature=share)
+
 [Baixar vídeo iOS](./ios_demo.mp4)
 
 [Baixar vídeo Android](./android_demo.webm)
-
-https://youtube.com/shorts/6WKXLpx6PEo
