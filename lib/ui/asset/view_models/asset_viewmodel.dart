@@ -1,17 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:tractian_challenge/domain/models/tree_item.dart';
-import 'package:tractian_challenge/domain/use_cases/three_item/three_items_get_usecase.dart';
+import 'package:tractian_challenge/domain/use_cases/tree_item/tree_items_get_usecase.dart';
 import 'package:tractian_challenge/ui/asset/models/filter.dart';
 
 import '../../../domain/models/company.dart';
 import '../../../utils/state.dart';
 
 class AssetViewModel {
-  AssetViewModel({required ThreeItemsGetUsecase threeItemsGetUsecase})
+  AssetViewModel({required TreeItemsGetUsecase threeItemsGetUsecase})
       : _threeItemsGetUsecase = threeItemsGetUsecase;
 
-  final ThreeItemsGetUsecase _threeItemsGetUsecase;
+  final TreeItemsGetUsecase _threeItemsGetUsecase;
 
   final state = PageState.loading.obs;
   var _allItems = <TreeItem>[];
