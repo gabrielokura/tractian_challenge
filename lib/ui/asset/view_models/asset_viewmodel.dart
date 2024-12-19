@@ -1,5 +1,4 @@
-import 'dart:isolate';
-
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:tractian_challenge/domain/models/tree_item.dart';
 import 'package:tractian_challenge/domain/use_cases/three_item/three_items_get_usecase.dart';
@@ -31,7 +30,7 @@ class AssetViewModel {
     final result = await _threeItemsGetUsecase.from(company);
     _allItems = result;
 
-    items.value = await sort(result, filter);
+    items.value = await buildTree(result, filter);
 
     state.value = PageState.success;
   }
@@ -43,13 +42,13 @@ class AssetViewModel {
       assetFilter.value = tapped;
     }
 
-    items.value = await sort(_allItems, filter);
+    items.value = await buildTree(_allItems, filter);
   }
 
   void onTypeQuery(String text) async {
     searchQuery.value = text;
 
-    items.value = await sort(_allItems, filter);
+    items.value = await buildTree(_allItems, filter);
   }
 
   void onTapItem(TreeItem item) async {
@@ -59,22 +58,19 @@ class AssetViewModel {
     final index = _allItems.indexWhere((current) => item.id == current.id);
     _allItems[index] = item;
 
-    items.value = await sort(_allItems, filter);
+    items.value = await buildTree(_allItems, filter);
   }
 
-  Future<List<TreeItem>> sort(List<TreeItem> items, Filter filter) async {
-    final result =
-        await Isolate.run<List<TreeItem>>(() => items.toTreeHierarchy(filter));
-    return result;
+  Future<List<TreeItem>> buildTree(List<TreeItem> items, Filter filter) async {
+    return await compute(items.toTreeHierarchy, filter);
   }
 }
 
-// Links: https://stackoverflow.com/questions/41347416/building-tree-view-algorithm
-extension Sorting on List<TreeItem> {
+extension BuildTree on List<TreeItem> {
   List<TreeItem> toTreeHierarchy(Filter filter) {
     Map<String?, List<TreeItem>> parentTree = {};
     List<TreeItem> selectedItems = [];
-    Set<String> filteredItemIds = {};
+    Set<String> filteredItemsIds = {};
 
     for (var item in this) {
       parentTree.putIfAbsent(item.parentId, () => []).add(item);
@@ -82,27 +78,34 @@ extension Sorting on List<TreeItem> {
       final isMatchingFilter = filter.isMatching(item);
 
       if (isMatchingFilter) {
-        filteredItemIds.add(item.id);
+        filteredItemsIds.add(item.id);
+
+        if (filter.query.isNotEmpty) {
+          final childrenIds =
+              parentTree[item.id]?.map((item) => item.id).toList();
+
+          filteredItemsIds.addAll(childrenIds ?? []);
+        }
 
         String? currentParentId = item.parentId;
         while (currentParentId != null) {
-          filteredItemIds.add(currentParentId);
+          filteredItemsIds.add(currentParentId);
           currentParentId = firstWhere((i) => i.id == currentParentId).parentId;
         }
       }
     }
 
-    buildHierarchy(
+    _buildHierarchy(
         map: parentTree,
         level: 0,
         selectedItems: selectedItems,
         filter: filter,
-        filteredItemsIds: filteredItemIds);
+        filteredItemsIds: filteredItemsIds);
 
     return selectedItems;
   }
 
-  void buildHierarchy({
+  void _buildHierarchy({
     String? key,
     required Map<String?, List<TreeItem>> map,
     required int level,
@@ -114,42 +117,58 @@ extension Sorting on List<TreeItem> {
     if (children.isEmpty) return;
 
     for (var child in children) {
-      child.depth = level;
-      child.hasChild = map.containsKey(child.id);
+      if (filter.isActive) {
+        var isIncluded = filteredItemsIds.contains(child.id);
 
-      if (filter.isActive == false) {
-        selectedItems.add(child);
-
-        if (child.isExpanded == false) continue;
-
-        buildHierarchy(
-          key: child.id,
-          map: map,
-          level: level + 1,
-          selectedItems: selectedItems,
-          filter: filter,
-          filteredItemsIds: filteredItemsIds,
-        );
+        if (isIncluded) {
+          _addToTree(
+            item: child,
+            map: map,
+            level: level,
+            selectedItems: selectedItems,
+            filter: filter,
+            filteredItemsIds: filteredItemsIds,
+          );
+        }
 
         continue;
       }
 
-      if (filteredItemsIds.contains(child.id) == false) {
-        continue;
-      }
-
-      selectedItems.add(child);
-
-      child.changeExpanded();
-
-      buildHierarchy(
-        key: child.id,
+      _addToTree(
+        item: child,
         map: map,
-        level: level + 1,
+        level: level,
         selectedItems: selectedItems,
         filter: filter,
         filteredItemsIds: filteredItemsIds,
       );
     }
+  }
+
+  void _addToTree({
+    required TreeItem item,
+    required Map<String?, List<TreeItem>> map,
+    required int level,
+    required List<TreeItem> selectedItems,
+    required Filter filter,
+    required Set<String> filteredItemsIds,
+  }) {
+    item.level = level;
+    item.hasChild = map.containsKey(item.id);
+
+    if (filter.isActive) item.isExpanded = true;
+
+    selectedItems.add(item);
+
+    if (item.isExpanded == false) return;
+
+    _buildHierarchy(
+      key: item.id,
+      map: map,
+      level: level + 1,
+      selectedItems: selectedItems,
+      filter: filter,
+      filteredItemsIds: filteredItemsIds,
+    );
   }
 }

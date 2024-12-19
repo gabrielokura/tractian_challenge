@@ -29,7 +29,7 @@ class TreeListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          for (int i = 0; i < item.depth; i++)
+          for (int i = 0; i < item.level; i++)
             Container(
               margin: EdgeInsets.only(left: arrowIconWidth / 2),
               width: 1,
@@ -44,7 +44,7 @@ class TreeListItem extends StatelessWidget {
               size: arrowIconWidth,
             )
           else
-            SizedBox(width: item.depth == 0 ? 0 : arrowIconWidth),
+            SizedBox(width: item.level == 0 ? 0 : arrowIconWidth),
           TreeItemIcon(type: item.type),
           Flexible(
             child: Tooltip(

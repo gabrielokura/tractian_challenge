@@ -6,7 +6,7 @@ class TreeItem {
     required this.id,
     required this.name,
     this.parentId,
-    required this.depth,
+    required this.level,
     required this.type,
     this.sensorType,
     this.sensorStatus,
@@ -16,12 +16,12 @@ class TreeItem {
   final String name;
   final String id;
   final String? parentId;
-  int depth;
+  int level;
   final SensorType? sensorType;
   final SensorStatus? sensorStatus;
 
   bool hasChild = false;
-  bool isExpanded = false;
+  bool isExpanded = true;
 
   @override
   int get hashCode => id.hashCode;
@@ -59,7 +59,7 @@ class TreeItem {
         id: component.id,
         parentId: component.parentId ?? component.locationId,
         name: component.name,
-        depth: 0,
+        level: 0,
         type: TreeItemType.component,
         sensorType: sensorType,
         sensorStatus: sensorStatus,
@@ -69,7 +69,7 @@ class TreeItem {
           id: asset.id,
           parentId: asset.parentId ?? asset.locationId,
           name: asset.name,
-          depth: 0,
+          level: 0,
           type: TreeItemType.asset,
           sensorStatus: sensorStatus,
           sensorType: sensorType);
@@ -81,7 +81,7 @@ class TreeItem {
       id: location.id,
       name: location.name,
       parentId: location.parentId,
-      depth: 0,
+      level: 0,
       type: TreeItemType.location,
     );
   }
