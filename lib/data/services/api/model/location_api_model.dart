@@ -12,4 +12,12 @@ class LocationApiModel {
 
     return LocationApiModel(id: id, name: name, parentId: parentId);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'parentId': parentId,
+    };
+  }
 }

@@ -40,4 +40,17 @@ class AssetApiModel {
       locationId: locationId,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'parentId': parentId,
+      'sensorId': sensorId,
+      'sensorType': sensorType,
+      'status': status,
+      'gatewayId': gatewayId,
+      'locationId': locationId,
+    };
+  }
 }

@@ -17,8 +17,10 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  mocktail: 1.0.4
   flutter_lints: 5.0.0
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true

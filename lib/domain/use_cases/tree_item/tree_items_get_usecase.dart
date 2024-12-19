@@ -5,8 +5,8 @@ import 'package:tractian_challenge/domain/models/location.dart';
 import 'package:tractian_challenge/domain/models/tree_item.dart';
 import 'package:tractian_challenge/utils/result.dart';
 
-class ThreeItemsGetUsecase {
-  ThreeItemsGetUsecase({required AssetRepository assetRepository})
+class TreeItemsGetUsecase {
+  TreeItemsGetUsecase({required AssetRepository assetRepository})
       : _assetRepository = assetRepository;
 
   final AssetRepository _assetRepository;
